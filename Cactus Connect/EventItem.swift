@@ -16,7 +16,7 @@ struct EventItem {
     let ID = UUID()
 }
 
-struct EventItemView : View {
+struct EventItemView: View {
     let event: EventItem
     private static let dayFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -31,32 +31,63 @@ struct EventItemView : View {
     }()
     
     var body: some View {
-        HStack {
-            ZStack {
-                RoundedRectangle(cornerSize: CGSize(width: 5.0, height: 5.0))
-                    .fill(Color.green)
-                    .frame(width: 50, height: 50)
-                
-                VStack(alignment: .center, spacing: 2) {
-                    Text(EventItemView.monthFormatter.string(from: event.date))
-                        .bold()
-                        .foregroundStyle(.white)
-                    Text(EventItemView.dayFormatter.string(from: event.date))
-                        .foregroundStyle(.white)
-                }
-                .padding(.all, 2)
+        HStack(alignment: .center, spacing: 12) {
+            
+            // Date box
+            VStack(spacing: 4) {
+                Text(EventItemView.monthFormatter.string(from: event.date))
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundColor(.white)
+                Text(EventItemView.dayFormatter.string(from: event.date))
+                    .font(.title3)
+                    .bold()
+                    .foregroundColor(.white)
             }
-            VStack(alignment: .leading) {
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.green)
+                    .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+            )
+            
+            // Event details
+            VStack(alignment: .leading, spacing: 4) {
                 Text(event.title)
                     .font(.headline)
+                    .foregroundColor(.primary)
+                Text(event.location)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
                 Text(event.subtitle)
                     .font(.caption)
+                    .foregroundColor(.gray)
             }
+            
+            Spacer()
+            
+            // Chevron icon
+            Image(systemName: "chevron.right")
+                .foregroundColor(.gray)
+                .font(.system(size: 16, weight: .medium))
         }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(UIColor.systemBackground))
+                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+        )
     }
 }
 
 #Preview {
-    let event = EventItem(title: "Test Event", subtitle: "Subtitle", date: Date(), eventType: "Test Type", location: "Tempe")
+    let event = EventItem(
+        title: "Test Event",
+        subtitle: "Subtitle",
+        date: Date(),
+        eventType: "Test Type",
+        location: "Tempe"
+    )
     EventItemView(event: event)
 }
