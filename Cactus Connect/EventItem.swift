@@ -56,9 +56,13 @@ struct EventItemView: View {
                 Text(event.title)
                     .font(.headline)
                     .foregroundColor(.primary)
-                Text(event.location)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                HStack{
+                    Image(systemName: "mappin.and.ellipse")
+                        .foregroundColor(.gray)
+                    Text(event.location)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
                 Text(event.subtitle)
                     .font(.caption)
                     .foregroundColor(.gray)
