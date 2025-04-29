@@ -75,8 +75,8 @@ struct EventItemView: View {
                 .foregroundColor(.gray)
                 .font(.system(size: 16, weight: .medium))
         }
-        .padding(.horizontal)
-        .padding(.vertical, 8)
+        // Apply the searchable modifier
+        .padding(.all, 2)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(UIColor.systemBackground))

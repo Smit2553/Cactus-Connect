@@ -72,7 +72,6 @@ struct ContentView: View {
             }
             .listStyle(.plain) // Use plain list style
             .navigationTitle("Cactus Events")
-            // Apply the searchable modifier
             .searchable(text: $searchText, prompt: "Search events")
         }
     }
