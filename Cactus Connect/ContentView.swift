@@ -11,51 +11,54 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var searchText = ""
-
-    let eventItems = [
-        EventItem(
-            title: "Desert Botanical Garden Tour",
-            subtitle: "Explore the beauty of desert plants",
-            date: Calendar.current.date(from: DateComponents(year: 2025, month: 5, day: 10))!,
-            eventType: "Tour",
-            location: "Phoenix",
-            url: URL(string: "https://google.com/")
-            
-        ),
-        EventItem(
-            title: "Cactus Cultivation Workshop",
-            subtitle: "Learn how to grow and care for cacti",
-            date: Calendar.current.date(from: DateComponents(year: 2025, month: 5, day: 15))!,
-            eventType: "Workshop",
-            location: "Scottsdale",
-            url: URL(string: "https://cactuslover.org/workshop")
-        ),
-        EventItem(
-            title: "Succulent Swap Meet",
-            subtitle: "Trade plants with fellow enthusiasts",
-            date: Calendar.current.date(from: DateComponents(year: 2025, month: 5, day: 22))!,
-            eventType: "Community",
-            location: "Tempe",
-            url: URL(string: "https://succulentsociety.org/swap-meet")
-        ),
-        EventItem(
-            title: "Desert Conservation Talk",
-            subtitle: "Learn about protecting native species",
-            date: Calendar.current.date(from: DateComponents(year: 2025, month: 6, day: 5))!,
-            eventType: "Lecture",
-            location: "Mesa",
-            url: URL(string: "https://desertconservation.org/talks")
-        ),
-        EventItem(
-            title: "Cactus Photography Class",
-            subtitle: "Capture the beauty of desert plants",
-            date: Calendar.current.date(from: DateComponents(year: 2025, month: 6, day: 12))!,
-            eventType: "Class",
-            location: "Phoenix",
-            url: URL(string: "https://cactusbotanical.org/photography-class")
-        )
+    @State private var eventItems: [EventItem] = []
+    @State private var isLoading = false
+    
+    // Example UUIDs to fetch
+    let eventUUIDs = [
+        "1968fdf2-934b-4a67-b782-088979a1e8a6",
+        // Add more UUIDs as needed
     ]
-
+    
+    struct APIEvent: Decodable {
+        let uuid: String
+        let name: String
+        let url: String?
+        let description: String
+        let category: String
+        let location: String
+        let date: String
+    }
+    
+    func fetchEvents() async {
+        isLoading = true
+        var loadedEvents: [EventItem] = []
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withFullDate]
+        for uuid in eventUUIDs {
+            guard let url = URL(string: "https://x4gswcows00woccgsowkww0c.codestacx.com/events/\(uuid)") else { continue }
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let apiEvent = try JSONDecoder().decode(APIEvent.self, from: data)
+                let eventDate = dateFormatter.date(from: apiEvent.date) ?? Date()
+                let event = EventItem(
+                    title: apiEvent.name,
+                    subtitle: apiEvent.description,
+                    date: eventDate,
+                    eventType: apiEvent.category,
+                    location: apiEvent.location,
+                    url: apiEvent.url != nil ? URL(string: apiEvent.url!) : nil
+                )
+                loadedEvents.append(event)
+            } catch {
+                // Handle error or skip
+                continue
+            }
+        }
+        eventItems = loadedEvents
+        isLoading = false
+    }
+    
     var filteredEvents: [EventItem] {
         if searchText.isEmpty {
             return eventItems
@@ -71,16 +74,24 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            List(filteredEvents, id: \.ID) { event in
-                NavigationLink(destination: EventDetails(event: event)) {
-                    EventItemView(event: event)
+            if isLoading {
+                ProgressView("Loading events...")
+                    .navigationTitle("Cactus Events")
+            } else {
+                List(filteredEvents, id: \.ID) { event in
+                    NavigationLink(destination: EventDetails(event: event)) {
+                        EventItemView(event: event)
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear) 
                 }
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear) 
+                .listStyle(.plain)
+                .navigationTitle("Cactus Events")
+                .searchable(text: $searchText, prompt: "Search events")
             }
-            .listStyle(.plain) // Use plain list style
-            .navigationTitle("Cactus Events")
-            .searchable(text: $searchText, prompt: "Search events")
+        }
+        .task {
+            await fetchEvents()
         }
     }
 }

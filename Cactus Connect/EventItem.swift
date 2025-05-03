@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EventItem {
+public struct EventItem {
     let title: String
     let subtitle: String
     let date: Date
@@ -64,7 +64,7 @@ struct EventItemView: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
-                Text(event.subtitle)
+                Text(event.subtitle.prefix(70))
                     .font(.caption)
                     .foregroundColor(.gray)
             }
