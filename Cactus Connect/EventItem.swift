@@ -13,6 +13,7 @@ struct EventItem {
     let date: Date
     let eventType: String
     let location: String
+    let url: URL?
     let ID = UUID()
 }
 
@@ -48,7 +49,7 @@ struct EventItemView: View {
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.green)
-                    .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+                    .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0)
             )
             
             // Event details
@@ -67,20 +68,16 @@ struct EventItemView: View {
                     .font(.caption)
                     .foregroundColor(.gray)
             }
-            
             Spacer()
             
-            // Chevron icon
-            Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
-                .font(.system(size: 16, weight: .medium))
+           
         }
         // Apply the searchable modifier
         .padding(.all, 2)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(UIColor.systemBackground))
-                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+ 
         )
     }
 }
@@ -91,7 +88,8 @@ struct EventItemView: View {
         subtitle: "Subtitle",
         date: Date(),
         eventType: "Test Type",
-        location: "Tempe"
+        location: "Tempe",
+        url: URL(string: "https://www.google.com")
     )
     EventItemView(event: event)
 }

@@ -18,35 +18,41 @@ struct ContentView: View {
             subtitle: "Explore the beauty of desert plants",
             date: Calendar.current.date(from: DateComponents(year: 2025, month: 5, day: 10))!,
             eventType: "Tour",
-            location: "Phoenix"
+            location: "Phoenix",
+            url: URL(string: "https://google.com/")
+            
         ),
         EventItem(
             title: "Cactus Cultivation Workshop",
             subtitle: "Learn how to grow and care for cacti",
             date: Calendar.current.date(from: DateComponents(year: 2025, month: 5, day: 15))!,
             eventType: "Workshop",
-            location: "Scottsdale"
+            location: "Scottsdale",
+            url: URL(string: "https://cactuslover.org/workshop")
         ),
         EventItem(
             title: "Succulent Swap Meet",
             subtitle: "Trade plants with fellow enthusiasts",
             date: Calendar.current.date(from: DateComponents(year: 2025, month: 5, day: 22))!,
             eventType: "Community",
-            location: "Tempe"
+            location: "Tempe",
+            url: URL(string: "https://succulentsociety.org/swap-meet")
         ),
         EventItem(
             title: "Desert Conservation Talk",
             subtitle: "Learn about protecting native species",
             date: Calendar.current.date(from: DateComponents(year: 2025, month: 6, day: 5))!,
             eventType: "Lecture",
-            location: "Mesa"
+            location: "Mesa",
+            url: URL(string: "https://desertconservation.org/talks")
         ),
         EventItem(
             title: "Cactus Photography Class",
             subtitle: "Capture the beauty of desert plants",
             date: Calendar.current.date(from: DateComponents(year: 2025, month: 6, day: 12))!,
             eventType: "Class",
-            location: "Phoenix"
+            location: "Phoenix",
+            url: URL(string: "https://cactusbotanical.org/photography-class")
         )
     ]
 
@@ -66,9 +72,11 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List(filteredEvents, id: \.ID) { event in
-                EventItemView(event: event)
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear) 
+                NavigationLink(destination: EventDetails(event: event)) {
+                    EventItemView(event: event)
+                }
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear) 
             }
             .listStyle(.plain) // Use plain list style
             .navigationTitle("Cactus Events")
