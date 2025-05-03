@@ -98,18 +98,18 @@ def update_city(city_uuid: str, city: dict):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error updating city: {str(e)}")
 
-@app.delete("/cities/{city_uuid}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_city(city_uuid: str):
-    try:
-        conn = get_db_conn()
-        cur = conn.cursor()
-        cur.execute("DELETE FROM city WHERE uuid = %s", (city_uuid,))
-        conn.commit()
-        cur.close()
-        conn.close()
-        return None
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error deleting city: {str(e)}")
+# @app.delete("/cities/{city_uuid}", status_code=status.HTTP_204_NO_CONTENT)
+# def delete_city(city_uuid: str):
+#     try:
+#         conn = get_db_conn()
+#         cur = conn.cursor()
+#         cur.execute("DELETE FROM city WHERE uuid = %s", (city_uuid,))
+#         conn.commit()
+#         cur.close()
+#         conn.close()
+#         return None
+#     except Exception as e:
+#         raise HTTPException(status_code=400, detail=f"Error deleting city: {str(e)}")
 
 @app.post("/events/", status_code=status.HTTP_201_CREATED)
 def create_event(event: dict):
@@ -194,18 +194,18 @@ def update_event(event_uuid: str, event: dict):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error updating event: {str(e)}")
 
-@app.delete("/events/{event_uuid}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_event(event_uuid: str):
-    try:
-        conn = get_db_conn()
-        cur = conn.cursor()
-        cur.execute("DELETE FROM event WHERE uuid = %s", (event_uuid,))
-        conn.commit()
-        cur.close()
-        conn.close()
-        return None
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error deleting event: {str(e)}")
+# @app.delete("/events/{event_uuid}", status_code=status.HTTP_204_NO_CONTENT)
+# def delete_event(event_uuid: str):
+#     try:
+#         conn = get_db_conn()
+#         cur = conn.cursor()
+#         cur.execute("DELETE FROM event WHERE uuid = %s", (event_uuid,))
+#         conn.commit()
+#         cur.close()
+#         conn.close()
+#         return None
+#     except Exception as e:
+#         raise HTTPException(status_code=400, detail=f"Error deleting event: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn
