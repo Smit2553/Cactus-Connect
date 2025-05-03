@@ -50,7 +50,7 @@
 
 **Live API:**
 
-- [https://x4gswcows00woccgsowkww0c.codestacx.com/docs](https://x4gswcows00woccgsowkww0c.codestacx.com/docs)
+- [https://cactusapi.codestacx.com/docs](https://cactusapi.codestacx.com/docs)
 
 ### Backend Setup (`Cactus Connect Backend`)
 
@@ -156,7 +156,7 @@ The backend provides the following RESTful API endpoints:
   - Request Body: (Similar structure to POST)
 - `DELETE /events/{event_uuid}`: Delete a specific event.
 
-_(Refer to [https://x4gswcows00woccgsowkww0c.codestacx.com/docs](https://x4gswcows00woccgsowkww0c.codestacx.com/docs))._
+_(Refer to [https://cactusapi.codestacx.com/docs](https://cactusapi.codestacx.com/docs))._
 
 ---
 
