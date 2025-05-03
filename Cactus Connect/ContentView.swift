@@ -44,7 +44,7 @@ struct ContentView: View {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withFullDate]
         for uuid in eventUUIDs {
-            guard let url = URL(string: "https://x4gswcows00woccgsowkww0c.codestacx.com/events/\(uuid)") else { continue }
+            guard let url = URL(string: "https://cactusapi.codestacx.com/events/\(uuid)") else { continue }
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 let apiEvent = try JSONDecoder().decode(APIEvent.self, from: data)
