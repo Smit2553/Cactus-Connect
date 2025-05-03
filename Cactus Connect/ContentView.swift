@@ -17,7 +17,14 @@ struct ContentView: View {
     // Example UUIDs to fetch
     let eventUUIDs = [
         "1968fdf2-934b-4a67-b782-088979a1e8a6",
-        // Add more UUIDs as needed
+        "ca3430c3-ac16-491f-bc27-4da2907683fd",
+        "56ac2108-7eb2-4d55-ade3-a108e1822550",
+        "691bcddf-c062-4c8e-9d45-f9f239b2001f",
+        "01f5738e-7cfc-448c-9ec1-4c454da5b5a9",
+        "633740d7-73b5-45ac-b7d0-5606302c2e64",
+        "13a767a-b5ac-4a07-9f8d-300ba5adc955",
+        "da068bfd-72c8-49a1-bb00-05ce7b32a386"
+        
     ]
     
     struct APIEvent: Decodable {
